@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.w77996.straw.mapper.UserMapper">
+    <insert id="insertNewUser" useGeneratedKeys="true" keyProperty="id">
+        insert into t_straw_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="openId !=null and openId !=''">
+                open_id
+            </if>
+            <if test="userLogo !=null and userLogo !=''">
+                user_logo
+            </if>
+            <if test="nickname !=null and nickname !=''">
+                nickname
+            </if>
+            <if test="sex !=null">
+                sex
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="openId !=null and openId !=''">
+                #{openId}
+            </if>
+            <if test="userLogo !=null and userLogo !=''">
+                #{userLogo}
+            </if>
+            <if test="nickName !=null and nickName !=''">
+                #{nickname}
+            </if>
+            <if test="sex !=null">
+                #{sex}
+            </if>
+        </trim>
+    </insert>
+    <insert id="createNewUser" parameterType="WxUserInfoDto" useGeneratedKeys="true" keyProperty="id">
+        insert into t_straw_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="openId !=null and openId !=''">
+                open_id,
+            </if>
+            <if test="userLogo !=null and userLogo !=''">
+                user_logo,
+            </if>
+            <if test="nickname !=null and nickname !=''">
+                nickname,
+            </if>
+            <if test="uuid !=null and uuid !=''">
+                uuid,
+            </if>
+            <if test="lastLogin !=null">
+                last_login,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="openId !=null and openId !=''">
+                #{openId},
+            </if>
+            <if test="userLogo !=null and userLogo !=''">
+                #{userLogo},
+            </if>
+            <if test="nickname !=null and nickname !=''">
+                #{nickname},
+            </if>
+            <if test="uuid !=null and uuid !=''">
+                #{uuid},
+            </if>
+            <if test="lastLogin !=null">
+                #{lastLogin},
+            </if>
+        </trim>
+    </insert>
+    <!--用户详细-->
+    <insert id="createNewUserDetail" parameterType="com.w77996.straw.entity.UserDetailEntity">
+        insert into t_straw_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId !=null and userId !=''">
+                user_id,
+            </if>
+            <if test="platform !=null and platform !=''">
+                platform,
+            </if>
+            <if test="sex !=null">
+                sex,
+            </if>
+            <if test="location !=null and location !=''">
+                location,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId !=null and userId !=''">
+                #{userId},
+            </if>
+            <if test="platform !=null and platform !=''">
+                #{platform},
+            </if>
+            <if test="sex !=null ">
+                #{sex},
+            </if>
+            <if test="location !=null and location !=''">
+                #{location},
+            </if>
+        </trim>
+    </insert>
+    <!--更新用户手机号-->
+    <update id="bindPhoneForUser">
+        update t_straw_user set phone_num = #{phone}  where id = #{userId}
+    </update>
+    <!--通过id获取用户-->
+    <select id="getUserById" parameterType="integer" resultType="com.w77996.straw.entity.UserEntity">
+        select * from t_straw_user where id = #{id} limit 1
+    </select>
+    <!--通过手机号获取用户信息-->
+    <select id="getUserByPhone" resultType="com.w77996.straw.entity.UserEntity">
+        select * from t_straw_user where phone_num = #{phone} limit 1
+    </select>
+    <!--通过-->
+    <select id="getUserByUserNameAndPassword" parameterType="com.w77996.straw.entity.dto.user.LoginDto"
+            resultType="com.w77996.straw.entity.UserEntity">
+         select * from t_straw_user where user_name = #{userName}  and password = #{password}
+    </select>
+    <!--通过openId获取用户-->
+    <select id="getUserByOpenId" resultType="com.w77996.straw.entity.UserEntity">
+        select * from t_straw_user where open_id=#{openId} limit 1
+    </select>
+    <select id="getUserDetailById" resultType="com.w77996.straw.entity.UserDetailEntity" parameterType="integer">
+        select * from t_straw_user_info where user_id = #{userId}
+    </select>
+    <!--通过openId更新用户-->
+    <update id="updateUserByOpenId" parameterType="com.w77996.straw.entity.UserEntity">
+        update t_straw_user
+        <set>
+            <if test="lastLogin !=null">
+                last_login = #{lastLogin}
+            </if>
+        </set>
+        where open_id = #{openId}
+    </update>
+    <update id="updateUserDetail" parameterType="com.w77996.straw.entity.dto.user.UserInfoDto">
+        update t_straw_user_info
+        <set>
+            <if test="sex !=null ">
+                sex = #{sex},
+            </if>
+            <if test="birthday !=null ">
+                birthday = #{birthday},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+</mapper>

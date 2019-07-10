@@ -1,0 +1,20 @@
+# Mybatis配置
+spring:
+    profiles:
+      active: w77996
+    devtools:
+      restart:
+        additional-paths: src/main/java
+    servlet:
+      multipart:
+        max-file-size: -1
+
+mybatis:
+    mapperLocations: classpath:mapper/**/*.xml
+    typeAliasesPackage: com.w77996.straw.entity
+    #可以自己自定义mybatis配置
+    #config-location: classpath:mybatis.xml
+    configuration:
+      map-underscore-to-camel-case: true
+server:
+  port: 8989

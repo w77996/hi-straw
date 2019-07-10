@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    name: graduate
+    driver-class-name: com.mysql.jdbc.Driver
+    url: 数据库地址
+    username: 数据库用户名
+    password: 数据库密码
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 30
+    maxWait: 2000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    #        filters: stat,log4j
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    useGlobalDataSourceStat: true
+    jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+      time-zone: GMT+08
+#七牛
+qiNiu:
+  accessKey: 你申请的七牛云key
+  secretKey: 你申请的七牛云sec
+  bucket: 你申请的七牛云bucket
+  domain: 你申请的七牛云domain
+#微信
+wx:
+  appId: 你申请的微信id
+  appSec: 你申请的微信sec
+
+

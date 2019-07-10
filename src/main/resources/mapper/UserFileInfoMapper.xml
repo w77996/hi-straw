@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.w77996.straw.mapper.UserFileInfoMapper">
+
+    <insert id="createNewUserFileInfo" parameterType="com.w77996.straw.entity.UserFileInfoEntity">
+         insert into t_straw_user_file_info(user_id) values
+        (#{userId})
+    </insert>
+    <!--更新用户文件相关信息-->
+    <update id="updateUserFileInfo" parameterType="com.w77996.straw.entity.UserFileInfoEntity">
+        replace into  t_straw_user_file_info (user_id,file_size,left_size,total_size,file_num) values(#{userId},#{fileSize},#{leftSize},#{totalSize},#{fileNum})
+    </update>
+    <!--删除文件-->
+    <select id="getUserFileInfoByUserId" parameterType="integer"
+            resultType="com.w77996.straw.entity.UserFileInfoEntity">
+        select * from t_straw_user_file_info where user_id = #{userId} limit 1
+    </select>
+</mapper>

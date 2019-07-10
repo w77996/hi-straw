@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.w77996.straw.mapper.FileMapper">
+    <!--插入文件-->
+    <insert id="insertFile" parameterType="com.w77996.straw.entity.FileEntity">
+        insert into t_straw_file(user_id,file_name,file_path,file_size,props) values
+        (#{userId},#{fileName},#{filePath},#{fileSize},#{props})
+    </insert>
+    <!--删除文件-->
+    <update id="deleteFileById" parameterType="integer">
+        update t_straw_file set status = -1 where id = #{id}
+    </update>
+    <!--通过id获取用户文件列表-->
+    <select id="getFileListByUserId" resultType="com.w77996.straw.entity.FileEntity" parameterType="map">
+        select * from t_straw_file where user_id = #{userId} and status = 0 order by create_time desc limit #{page.limitStart},#{page.limitEnd}
+    </select>
+    <!--获取用户文件数量-->
+    <select id="countFileByUserIdAndFilePath" parameterType="integer" resultType="integer">
+        select count(0) from t_straw_file where user_id = #{userId} and status = 0
+    </select>
+    <!--查找-->
+    <select id="countFileExistByUserId" resultType="java.lang.Integer">
+         select count(0) from t_straw_file where user_id = #{userId} and file_name=#{fileName} and status = 0
+    </select>
+    <!--通过id查找file-->
+    <select id="getFileByFileId" resultType="com.w77996.straw.entity.FileEntity">
+        select * from t_straw_file where id = #{fileId} and status = 0 limit 1
+    </select>
+    <!--通过文件名获取列表-->
+    <select id="searchFileListByName" resultType="com.w77996.straw.entity.FileEntity">
+        select * from t_straw_file where user_id = #{userId} and status = 0 and file_name like concat('%',#{page.searchValue},'%') order by create_time desc limit #{page.limitStart},#{page.limitEnd}
+    </select>
+    <select id="getFileByUserIdAndFileId" parameterType="map" resultType="com.w77996.straw.entity.FileEntity">
+        select * from t_straw_file where id = #{id} and user_id = #{userId} limit 1
+    </select>
+</mapper>

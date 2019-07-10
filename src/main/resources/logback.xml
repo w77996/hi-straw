@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="COMMON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.w77996.straw.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="COMMON" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="COMMON"/>
+    </root>
+</configuration>
